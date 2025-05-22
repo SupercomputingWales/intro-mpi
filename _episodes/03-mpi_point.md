@@ -168,7 +168,7 @@ sending and receiving at the same time.
 > > The key difference is the sends and receives do not need to be different (no matching send to a receive in order
 > > this time.  Just `isend` and `irecv` and then `wait` for the sends to complete and then receive the data.
 > > 
-> > Check out the [point_nonblock.py]({{ site.baseurl }}/files/example2/point_nonblock.py) and the corresponding [slurm job script]({{ site.baseurl }}/files/example2/{{ site.baseurl }}/files/example2/point_nonblock.py).
+> > Check out the [point_nonblock.py]({{ site.baseurl }}/files/example2/point_nonblock.py) and the corresponding [slurm job script]({{ site.baseurl }}/files/example2/point_nonblock-slurm.sh).
 > {: .solution}
 {: .challenge}
 
