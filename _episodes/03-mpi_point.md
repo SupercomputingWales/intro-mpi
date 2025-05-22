@@ -87,8 +87,8 @@ To run the code you can use as a basis [hello_parallel-slurm.sh]({{ site.baseurl
 
 ## MPI_Send and MPI_Recv
 
-The first type of communication is using a blocking send and recieve.  This will not process any furthe code until the
-send has been completed (i.e. why it is describing as blocking).  With `mpi4py` we can use `comm.send` and `comm.recv`.
+The first type of communication is using a blocking send and receive.  This will not process any further code until the
+send has been completed (i.e. why it is described as blocking).  With `mpi4py` we can use `comm.send` and `comm.recv`.
 
 A message is just identifiable data on the network:
 - Think of it as an envelope
@@ -97,16 +97,16 @@ A message is just identifiable data on the network:
 - Data length can be zero to many MBs.
 - Messages can have tag identifiers to further identify them.
 
-The send and receives **have** to work in partnership. Without a receive to pick up the data from the send (and it is
-blocking) the code will hit a deadlock with the code not able to progress with both MPI tasks waiting for their
-communications to complete.  Therefore every send must have a receive (and vice-versa).
+The send and receives **have** to work in partnership. Without a receive to pick up the data from the (blocking)
+send the code will hit a deadlock with the code not able to progress with both MPI tasks waiting for their
+communications to complete. Therefore every send must have a receive (and vice-versa).
 
-There is also a special `MPI_ANY_SOURCE` to recieve from any sender.
+There is also a special `MPI_ANY_SOURCE` to receive from any sender.
 
 ## Tagging
 
-Tags allow messages to further identified and can be used to make messages are read in the correct order.  There is no
-guarantee messages arrive in the order they were sent.  Tags can have any value but ideally should be identifiable
+Tags allow messages to be further identified and can be used to make messages read in the correct order. There is no
+guarantee messages arrive in the order they were sent. Tags can have any value but ideally should be identifiable
 uniquely so errors in communication can be traced if the tag number is given.
 
 A special tag identifier `MPI_ANY_TAG` can ignore tag number.
@@ -131,7 +131,7 @@ data = comm.recv(source=?, tag=?)
 > > ## Solution
 > > 
 > > The key thing is to make sure one of the pairs (either the odd or even) send the data first whilst the other pair
-> > waits to recieve the data.  See [point.py]({{ site.baseurl }}/files/example2/point.py) and the corresponding [slurm job script]({{ site.baseurl }}/files/example2/pointtopoint-slurm.sh).
+> > waits to receive the data.  See [point.py]({{ site.baseurl }}/files/example2/point.py) and the corresponding [slurm job script]({{ site.baseurl }}/files/example2/pointtopoint-slurm.sh).
 > {: .solution}
 {: .challenge}
 
@@ -156,7 +156,7 @@ data = req.wait()
 {: .language-python}
 
 Notice the `wait()` method is used to declare when the code should wait for completion.  Useful for exchanging data if
-sending and recieving at the same time.
+sending and receiving at the same time.
 
 > ## Non-blocking communication
 >
@@ -165,7 +165,7 @@ sending and recieving at the same time.
 >
 > > ## Solution
 > > 
-> > The key difference is the sends and recieves do not need to be different (no matching send to a recieve in order
+> > The key difference is the sends and receives do not need to be different (no matching send to a receive in order
 > > this time.  Just `isend` and `irecv` and then `wait` for the sends to complete and then receive the data.
 > > 
 > > Check out the [point_nonblock.py]({{ site.baseurl }}/files/example2/point_nonblock.py) and the corresponding [slurm job script]({{ site.baseurl }}/files/example2/{{ site.baseurl }}/files/example2/point_nonblock.py).

@@ -4,7 +4,6 @@
 # pickled python dictionaries.
 
 from mpi4py import MPI
-import numpy as np
 
 if __name__ == "__main__":
 

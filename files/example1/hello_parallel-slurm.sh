@@ -11,19 +11,9 @@
 
 # Load required modules.
 module purge
-module load python
-module load mpi
+module load mpi4py/3.1.5
 module list
-
-# Create an output directory on the fast scratch filesystem, and
-# run from this directory.
-WDPATH=/scratch/$USER/mpi_training/hello_parallel.$SLURM_JOBID
-mkdir -p $WDPATH
-cd $WDPATH
-
-# Copy the python code to the run directory
-cp $SLURM_SUBMIT_DIR/hello_parallel.py .
 
 # Run a number of copies of the code equal to the number of
 # MPI processes requested.
-mpirun -np 12 python3 hello_parallel.py
+mpirun -np ${SLURM_NTASKS} python3 hello_parallel.py

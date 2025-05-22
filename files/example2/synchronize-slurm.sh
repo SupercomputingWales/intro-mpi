@@ -1,10 +1,10 @@
 #!/bin/bash --login
-#SBATCH -n 4
+#SBATCH -n 12
 #SBATCH -t 0-00:05:00
-#SBATCH -J Cartesian
+#SBATCH -J Synchronize
 #SBATCH -p compute
-#SBATCH --account scwXXXX
-#SBATCH -o out.cartesian.%j
+#SBATCH --account=scwXXXX
+#SBATCH -o out.synchronize.%j
 
 # if run on a training session add your reservation code as
 # #SBATCH --reservation=training
@@ -15,4 +15,4 @@ module load mpi4py/3.1.5
 
 # Run a number of copies of the code equal to the number of
 # MPI processes requested.
-mpirun -np ${SLURM_NTASKS} python3 cartesian.py
+mpirun -np ${SLURM_NTASKS} python3 synchronize.py

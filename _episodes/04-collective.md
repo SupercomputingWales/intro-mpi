@@ -87,12 +87,12 @@ There are also the non-blocking versions of all communication, e.g. `MPI_Iallgat
 > Should we use `comm.Scatter` or `comm.scatter`?
 > > ## Solution
 > >
-> > In this example we fix the size of the array to scatter as `nprocs * allocsize` where `allocsize = 2` and `nprocs`
-> > is the size of the communicator (number of MPI tasks).
+> > In this example we fix the size of the array to scatter as `nprocs`,
+> > the size of the communicator (number of MPI tasks).
 > > ~~~
 > > if rank == 0:
-> >   senddata = np.arange(
-> >   nprocs * allocsize, dtype='i').reshape(nprocs, allocsize)
+>>    senddata = [(x+1)**x for x in range(nprocs)]
+>>    print('we will be scattering:',senddata) 
 > > else:
 > >   senddata = None
 > > ~~~
@@ -100,8 +100,8 @@ There are also the non-blocking versions of all communication, e.g. `MPI_Iallgat
 > >
 > > When scattering the data the receiving array is sized to be just `allosize`.
 > > ~~~
-> > recvdata = np.empty(allocsize, dtype='i')
-> > comm.Scatter(senddata, recvdata, root=0)
+> > recvdata = [None]
+> > recvdata = comm.scatter(senddata, root=0)
 > > ~~~
 > > {: .language-python}
 > > 
